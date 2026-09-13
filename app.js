@@ -34,6 +34,7 @@ function pagination(page,pages,type){let nums=Array.from({length:Math.min(5,page
 function render(){
 cancelRouletteSpin();
 main.classList.toggle('api-main',state.page==='api');
+main.classList.toggle('home-page',state.page==='home');
 document.querySelector('.workspace').classList.toggle('full-width',state.page!=='demon');
 const parent=requestPages.includes(state.page)?'requests':toolPageTitles[state.page]?'demon':state.page;
 document.querySelectorAll('.primary-nav button').forEach(b=>{b.classList.toggle('active',b.dataset.page===parent);b.setAttribute('aria-current',b.dataset.page===parent?'page':'false')});
@@ -59,15 +60,15 @@ window.addEventListener('hashchange',()=>{if(location.pathname.startsWith('/gmd-
 function updateThemeButton(){let dark=effectiveTheme()==='dark';const b=document.querySelector('#theme-toggle');b.innerHTML=icon(dark?'sun':'moon');b.setAttribute('aria-label',dark?'라이트 모드로 전환':'다크 모드로 전환')}
 function home(){
   main.innerHTML=`<section class="home-hero" aria-labelledby="home-title">
-  <div class="home-identity"><span class="brand-cube home-cube" aria-hidden="true"><i></i><i></i><b></b></span><div><p class="home-kicker">GEOMETRY DASH · SINCE 2017</p><h1 id="home-title">GMD 한국포럼</h1></div></div>
+  <div class="home-identity"><h1 id="home-title"><img class="home-wordmark" src="/gmd-korea-forum-mockup/img/forum-title.png" alt="GMD 한국포럼 · Since 2017.07.01" width="1679" height="280" fetchpriority="high"></h1></div>
   <p class="home-lede">한국 Geometry Dash 유저들의 공인 기록소.</p>
   <div class="home-search-area"><label class="home-search-box">${icon('search')}<input id="home-search" type="search" autocomplete="off" spellcheck="false" placeholder="레벨 또는 유저 검색" aria-label="레벨 또는 유저 검색" aria-controls="home-search-results" value="${esc(state.homeQuery||'')}"><kbd>Enter</kbd></label><div id="home-search-results" class="home-results" aria-label="검색 결과"></div></div>
   <div class="home-hero-bottom"><div class="home-figures"><span><strong>940</strong>등재 레벨</span><span><strong>25,738</strong>승인 기록</span><span><strong>6,517</strong>등록 유저</span></div><button class="home-submit" data-page="requests">기록 제출 ${icon('chevron')}</button></div>
 </section>
 <nav class="home-shortcuts" aria-label="기록 탐색"><button data-page="demon">${statImage('익스트림')}<span><strong>데몬리스트</strong><small>레벨별 난이도와 클리어 기록</small></span>${icon('chevron')}</button><button data-page="stats">${statImage('별')}<span><strong>스탯랭킹</strong><small>별·데몬·코인으로 보는 순위</small></span>${icon('chevron')}</button><button data-page="tools">${icon('list')}<span><strong>플레이 도구</strong><small>유저포인트·계산기·룰렛</small></span>${icon('chevron')}</button></nav>
 <div class="home-cards">
-<a class="home-card home-discord" href="https://discord.gg/nnsShzg" target="_blank" rel="noopener noreferrer"><div class="home-card-top"><span class="home-card-label">커뮤니티</span>${icon('discord')}</div><strong class="home-card-title">함께하는 곳, Discord</strong><p>공지와 이벤트, 토너먼트와 데몬리스트 변동 소식.<br>기록 검증과 문의도 공식 서버에서 함께합니다.</p><span class="home-card-go">공식 서버 들어가기 ${icon('external')}</span></a>
-<button class="home-card home-course" data-page="gddp"><div class="home-card-top"><span class="home-card-label">GDDP · 난이도 코스</span><span class="home-card-meta">120개 레벨</span></div><strong class="home-card-title">첫 데몬부터, 한 단계씩</strong><p>입문부터 마스터까지 7단계.<br>나에게 맞는 난이도에서 다음 도전을 찾아보세요.</p><span class="home-course-track" aria-hidden="true">${tiers.map((t,i)=>`<span style="--course-color:${t[1]}">${i+1}</span>`).join('')}</span><span class="home-course-labels"><span>입문</span><span>마스터</span></span><span class="home-card-go">GDDP 코스 보기 ${icon('chevron')}</span></button>
+<a class="home-card home-discord" href="https://discord.gg/nnsShzg" target="_blank" rel="noopener noreferrer"><div class="home-card-top"><span class="home-card-label">커뮤니티</span>${icon('discord')}</div><strong class="home-card-title">GMD 한국포럼 공식 Discord</strong><p>공지와 이벤트, 토너먼트와 데몬리스트 변동 소식.<br>기록 검증과 문의도 공식 서버에서 함께합니다.</p><span class="home-card-go">공식 서버 들어가기 ${icon('external')}</span></a>
+<button class="home-card home-course" data-page="gddp"><div class="home-card-top"><span class="home-card-label">GDDP · 난이도 코스</span><span class="home-card-meta">120개 레벨</span></div><strong class="home-card-title">다음 데몬에 도전해 보세요</strong><p>입문부터 마스터까지 7단계.<br>나에게 맞는 난이도에서 다음 도전을 찾아보세요.</p><span class="home-course-track" aria-hidden="true">${tiers.map((t,i)=>`<span style="--course-color:${t[1]}">${i+1}</span>`).join('')}</span><span class="home-course-labels"><span>입문</span><span>마스터</span></span><span class="home-card-go">GDDP 코스 보기 ${icon('chevron')}</span></button>
 </div>
 <div class="home-recent-foot"><span class="sample-label">디자인 목업 · 개별 순위와 기록은 예시입니다.</span><button class="record-link" data-page="api">개발자를 위한 API 문서 ${icon('chevron')}</button></div>
 ${footer()}`;renderHomeSearch();}
