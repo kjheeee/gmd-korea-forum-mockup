@@ -2,15 +2,16 @@
 <html lang="ko" data-theme="light">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#7054e8"><meta name="description" content="GMD 한국포럼 디자인 목업. 데몬리스트, 스탯랭킹, GDDP와 기록 제출을 살펴보세요.">
+  <meta name="theme-color" content="#2857a4"><meta name="description" content="GMD 한국포럼 디자인 목업. 데몬리스트, 스탯랭킹, GDDP와 기록 제출을 살펴보세요.">
   <title>데몬리스트 · GMD 한국포럼</title>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-  <link rel="stylesheet" href="/gmd-korea-forum-mockup/styles.css">
-  <link rel="stylesheet" href="/gmd-korea-forum-mockup/api.css">
+  <link rel="stylesheet" href="/gmd-korea-forum-mockup/styles.css?v=20260913-records">
+  <link rel="stylesheet" href="/gmd-korea-forum-mockup/api.css?v=20260913-records">
+  <link rel="stylesheet" href="/gmd-korea-forum-mockup/record.css?v=20260913-records">
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('gmd-theme')||'light'}catch{}</script>
-  <script src="/gmd-korea-forum-mockup/api.js" defer></script>
-  <script src="/gmd-korea-forum-mockup/app.js" defer></script>
+  <script src="/gmd-korea-forum-mockup/api.js?v=20260913-records" defer></script>
+  <script src="/gmd-korea-forum-mockup/app.js?v=20260913-records" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">본문으로 이동</a>
@@ -33,7 +34,7 @@
       <div class="sidebar-head"><div class="sidebar-title"><span>데몬리스트</span><b>940</b><button id="close-sidebar" class="icon-btn mobile-only" aria-label="레벨 목록 닫기">×</button></div><label class="search-box"><span data-icon="search"></span><input id="level-search" placeholder="레벨 이름 또는 순위 검색" aria-label="레벨 이름 또는 순위 검색"><kbd>/</kbd></label><div class="segmented" aria-label="레벨 범위"><button class="selected" data-range="all">전체 레벨</button><button data-range="top">상위 100</button></div></div>
       <div class="list-caption"><span>난이도 순위</span><span>예시 목록</span></div>
       <div class="level-list" id="level-list"></div>
-      <div class="sidebar-bottom"><span class="mini-cube" aria-hidden="true">◇</span><div><strong>쌓인 기록, 이어지는 도전.</strong><small>2017년부터 함께한 한국포럼</small></div></div>
+      <div class="sidebar-bottom"><span>총 940개 레벨 · 난이도 순</span></div>
     </aside>
     <main id="main" tabindex="-1"></main>
   </div>
