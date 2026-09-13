@@ -1,0 +1,24 @@
+/* theme-system.css — OS 다크 설정 대응 (자동 생성)
+   기존 [data-theme=dark] 규칙을 그대로 미러링합니다. 다크 규칙을 고치면 이 파일도 다시 생성하세요.
+   :root:not([data-theme="light"]) 이므로 사용자가 라이트를 명시하면 적용되지 않습니다.
+   반드시 다른 스타일시트 뒤에 로드하세요. */
+
+@media (prefers-color-scheme: dark) {
+  /* from styles.css */
+  :root:not([data-theme="light"]) { color-scheme:dark;--bg:#14151f;--surface:#1c1e2b;--sidebar:#191b26;--ink:#edeef8;--sub:#a1a5bb;--line:#2d3043;--soft:#252839;--purple:#aa95ff;--purple-dark:#b9a8ff;--tint:#30284b;--green:#65d1aa;--green-tint:#213a35;--red:#ff91a1;--gold:#e8be63;--shadow:0 16px 60px #0005 }
+
+  /* from api.css */
+  :root:not([data-theme="light"]) { --get:#9dcdb4;--get-bg:#25352c;--post:#e1bf89;--post-bg:#3a3225;--code-bg:#20252b;--code-line:#333a43;--code-ink:#d8dee6 }
+  :root:not([data-theme="light"]) .token-key { color:#a8c1e4 }
+  :root:not([data-theme="light"]) .token-string { color:#a6ceb9 }
+  :root:not([data-theme="light"]) .token-number { color:#d8bb91 }
+  :root:not([data-theme="light"]) .token-value { color:#c8afdf }
+
+  /* from record.css */
+  :root:not([data-theme="light"]) { --bg:#181b1f;--surface:#181b1f;--sidebar:#1c1f24;--ink:#e4e6e9;--sub:#a0a6ae;--line:#33383f;--soft:#24292f;--purple:#97b8f0;--purple-dark:#b0c9f2;--tint:#252f3e;--green:#8bc7ad;--green-tint:#27382f;--red:#eaa1a1;--gold:#d4b16d }
+
+  /* from gd-assets.css */
+  :root:not([data-theme="light"]) .gd-asset { filter:drop-shadow(0 0 1px var(--sub)) }
+  :root:not([data-theme="light"]) { --tier-gold:#dcb765;--tier-silver:#b6bec6;--tier-bronze:#cb9464;--tier-green:#8bc7ad;--tier-aqua:#7fc6d2;--tier-pink:#e692b9;--tier-red:#eaa1a1;--tier-tealblue:#8dbdd6;--tier-purple:#b6a0e0;--tier-gray:#a8b0b8;--tier-none:#7c838c;--tier-top1-bg:#f3c95f;--tier-top1-fg:#181b1f }
+
+}

@@ -2,3 +2,131 @@
 @media(max-width:620px){.point-table td,.point-table th{font-size:13px}.point-table th{font-size:11px}.point-table .tier-column{width:40px;padding-left:4px;padding-right:4px}.tier-column .gd-asset{width:24px;height:24px}.point-table .medal-column{width:95px;min-width:95px}.profile-heading{gap:11px}.profile-heading .profile-trophy{width:50px;height:50px}.profile-point-line{font-size:11px;gap:10px}.profile-stat-grid{grid-template-columns:1fr;gap:0}.profile-stat-grid dt{font-size:11px}.profile-medal-groups{gap:15px}.profile-medal-group+.profile-medal-group{padding-left:12px}.profile-medals{gap:7px}.stats-table .stat-value-icon{width:15px;height:15px;margin-right:5px}}
 
 .profile-medal-overflow:not([open])>div{display:none}
+
+/* ── 등급 색 ─────────────────────────────────────────────
+   라이트는 #ffffff, 다크는 #181b1f 바탕 기준으로 대비를 계산해 전부 4.5:1 이상으로 맞춘 값입니다.
+   top1은 흰 바탕에서 4.5:1을 맞추면 gold와 거의 같은 색이 되어 1위가 구분되지 않으므로,
+   텍스트 색이 아니라 단색 배지로 처리합니다. */
+:root{--tier-gold:#947024;--tier-silver:#6f777f;--tier-bronze:#95602a;--tier-green:#1f7a54;--tier-aqua:#1a7684;--tier-pink:#b03a72;--tier-red:#a93b3b;--tier-tealblue:#276685;--tier-purple:#6242a0;--tier-gray:#67707a;--tier-none:#72777d;--tier-top1-bg:#957000;--tier-top1-fg:#fff}
+[data-theme=dark]{--tier-gold:#dcb765;--tier-silver:#b6bec6;--tier-bronze:#cb9464;--tier-green:#8bc7ad;--tier-aqua:#7fc6d2;--tier-pink:#e692b9;--tier-red:#eaa1a1;--tier-tealblue:#8dbdd6;--tier-purple:#b6a0e0;--tier-gray:#a8b0b8;--tier-none:#7c838c;--tier-top1-bg:#f3c95f;--tier-top1-fg:#181b1f}
+
+.tier-name{font-size:10px;font-weight:700;letter-spacing:.06em;white-space:nowrap}
+.tier-name.is-gold{color:var(--tier-gold)}
+.tier-name.is-silver{color:var(--tier-silver)}
+.tier-name.is-bronze{color:var(--tier-bronze)}
+.tier-name.is-green{color:var(--tier-green)}
+.tier-name.is-aqua{color:var(--tier-aqua)}
+.tier-name.is-pink{color:var(--tier-pink)}
+.tier-name.is-red{color:var(--tier-red)}
+.tier-name.is-tealblue{color:var(--tier-tealblue)}
+.tier-name.is-purple{color:var(--tier-purple)}
+.tier-name.is-gray{color:var(--tier-gray)}
+.tier-name.is-none{color:var(--tier-none)}
+.tier-name.is-top1{background:var(--tier-top1-bg);color:var(--tier-top1-fg);padding:2px 6px;border-radius:3px}
+
+/* ── 표 밀도 ───────────────────────────────────────────── */
+.point-table tbody tr{height:44px}
+/* tr의 height는 최소값이라 td 패딩이 이긴다. 28px 트로피 기준 (44-28)/2 = 8px. */
+/* styles.css가 .point-table td에 height:54px를 직접 걸어두어 tr의 height를 이긴다. td에서 덮는다. */
+.point-table tbody td{height:44px;padding-top:8px;padding-bottom:8px}
+.point-table .tier-column .gd-asset{vertical-align:middle}
+.point-table tbody tr:hover{background:var(--soft)}
+.point-table .table-rank{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums}
+.point-table .tier-column .gd-asset{width:28px;height:auto}
+.point-user-cell{display:flex;align-items:baseline;gap:8px;min-width:0}
+.point-user-cell .point-user{font-weight:600}
+@media(max-width:620px){.point-table tbody tr{height:40px}.point-table tbody td{height:40px;padding-top:6px;padding-bottom:6px}.point-table .tier-column .gd-asset{width:24px}.tier-name{display:none}}
+
+/* ── 홈: 검색을 주 동작으로 ─────────────────────────────────────────────
+   같은 무게의 섹션 3개뿐이라 초점이 없고, 레벨·유저 검색이 내부 페이지에만 있어
+   현관에서는 아무것도 찾을 수 없었다. 색은 전부 기존 토큰이라 두 테마가 자동으로 따라온다. */
+.home-hero{padding:34px 0 26px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:14px}
+.home-hero h1{margin:0;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.home-lede{margin:0;color:var(--sub);font-size:14px}
+
+.home-search-box{display:flex;align-items:center;gap:10px;height:52px;padding:0 8px 0 14px;background:var(--surface);border:1px solid var(--line);border-radius:4px}
+.home-search-box:focus-within{border-color:var(--purple)}
+.home-search-box>svg{color:var(--sub);flex:none}
+.home-search-box input{flex:1;min-width:0;height:100%;border:0;outline:none;background:none;color:var(--ink);font:inherit;font-size:16px}
+.home-search-box input::placeholder{color:var(--sub)}
+.home-search-go{flex:none;padding:8px 14px;border:1px solid var(--purple);border-radius:3px;background:none;color:var(--purple);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.home-search-go:hover{background:var(--tint)}
+
+.home-results{display:none}
+.home-results.open{display:block;border:1px solid var(--line);border-radius:4px;background:var(--surface);overflow:hidden}
+.home-results-group{display:flex;flex-direction:column;border-bottom:1px solid var(--line)}
+.home-results-group:last-child{border-bottom:0}
+.home-results-label{padding:9px 14px 4px;font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--sub)}
+/* styles.css의 전역 button 규칙이 가운데 정렬을 걸어두어 결과가 밀린다. 여기서 되돌린다. */
+.home-result{display:flex;align-items:center;justify-content:flex-start;gap:12px;width:100%;padding:9px 14px;border:0;background:none;color:var(--ink);font:inherit;text-align:left;cursor:pointer}
+.home-result:hover{background:var(--soft)}
+.home-result-rank{min-width:40px;font-size:12px;color:var(--sub);font-variant-numeric:tabular-nums}
+.home-result-main{display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+.home-result-main strong{font-size:14px;font-weight:600}
+.home-result-main small{font-size:12px;color:var(--sub)}
+.home-results-empty{margin:0;padding:16px;text-align:center;font-size:13px;color:var(--sub)}
+
+.home-figures{display:flex;flex-wrap:wrap;gap:28px;padding-top:2px}
+.home-figures span{display:flex;flex-direction:column;gap:2px;font-size:11px;color:var(--sub)}
+.home-figures strong{font-size:24px;line-height:1.1;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+
+@media(max-width:620px){
+  .home-hero{padding:22px 0 18px;gap:12px}
+  .home-search-box{height:46px;padding-right:6px}
+  .home-search-box input{font-size:15px}
+  .home-search-go{display:none}
+  .home-figures{gap:18px}
+  .home-figures strong{font-size:20px}
+}
+
+/* ── 홈: 최근 승인 기록을 본문으로 ───────────────────────────────────────
+   데몬리스트·스탯랭킹 미리보기는 내비와 중복이고 거의 정적이라 제거했다.
+   남은 한 섹션이 본문을 지려면 행이 정보를 더 날라야 한다 — 트로피·등급·레벨 순위·퍼센트.
+   전부 이미 있는 데이터이고, 색은 기존 토큰이라 두 테마가 자동으로 따라온다. */
+.home-recent{padding:26px 0 10px}
+.home-recent .record-section-heading{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:8px}
+.home-recent .record-log{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.home-recent .record-log li{display:grid;grid-template-columns:34px 148px minmax(0,1fr) 54px 44px;align-items:center;gap:14px;height:52px;padding:0;border-bottom:1px solid var(--line)}
+.home-recent .record-log li:last-child{border-bottom:0}
+.home-recent .record-log li:hover{background:var(--soft)}
+
+.home-log-trophy .gd-asset{width:30px;height:auto;vertical-align:middle}
+.home-log-who{display:flex;flex-direction:column;align-items:flex-start;gap:1px;min-width:0}
+.home-log-who .record-log-user{justify-content:flex-start;padding:0;border:0;background:none;color:var(--ink);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.home-log-level{display:flex;align-items:baseline;justify-content:flex-start;gap:9px;min-width:0;padding:0;border:0;background:none;color:var(--ink);font:inherit;text-align:left;cursor:pointer}
+.home-log-level:hover strong{color:var(--purple)}
+.home-log-rank{flex:none;font-size:12px;color:var(--sub);font-variant-numeric:tabular-nums}
+.home-log-level strong{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:14px;font-weight:500}
+.home-log-pct{justify-self:start;padding:2px 6px;border:1px solid var(--green);border-radius:3px;font-size:11px;font-weight:600;color:var(--green);font-variant-numeric:tabular-nums}
+.home-recent time{justify-self:end;font-size:12px;color:var(--sub);font-variant-numeric:tabular-nums}
+.home-recent-foot{display:flex;flex-wrap:wrap;gap:18px;margin-top:2px;padding-top:14px;border-top:1px solid var(--line)}
+
+@media(max-width:620px){
+  .home-recent .record-log li{grid-template-columns:28px minmax(0,1fr) auto;grid-template-rows:auto auto;height:auto;padding:10px 0;gap:3px 10px}
+  .home-log-trophy{grid-column:1;grid-row:1/3}
+  .home-log-trophy .gd-asset{width:24px}
+  .home-log-who{grid-column:2;grid-row:1}
+  .home-log-level{grid-column:2;grid-row:2}
+  .home-log-pct{grid-column:3;grid-row:1;justify-self:end}
+  .home-recent time{grid-column:3;grid-row:2}
+  .home-recent-foot{gap:12px}
+}
+
+/* ── 홈: 커뮤니티 카드 ───────────────────────────────────────────────────
+   실제 사이트 홈의 메인 CTA는 Discord인데 목업에서 통째로 빠져 있었다(파리티 누락).
+   GDDP를 나란히 두는 이유: 데몬리스트는 익스트림 데몬 전용이라 신규 방문자가 참여할 수 없고,
+   진입로인 GDDP는 이름만으로는 뜻이 전달되지 않아 설명할 자리가 필요하다.
+   내용이 있는 카드다 — 실제 링크와 실제 수치가 들어간다. */
+.home-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;padding:26px 0 4px}
+.home-card{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:7px;padding:20px;border:1px solid var(--line);border-radius:3px;background:var(--surface);color:var(--ink);font:inherit;text-align:left;text-decoration:none;cursor:pointer}
+.home-card:hover{border-color:var(--purple)}
+.home-card-label{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--purple)}
+.home-card-title{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.home-card p{margin:0;font-size:13px;line-height:1.65;color:var(--sub)}
+.home-card-go{display:inline-flex;align-items:center;gap:6px;margin-top:auto;padding-top:6px;font-size:13px;font-weight:600;color:var(--purple)}
+.home-card-meta{font-size:11px;color:var(--sub);font-variant-numeric:tabular-nums}
+
+@media(max-width:760px){
+  .home-cards{grid-template-columns:minmax(0,1fr);gap:12px;padding-top:22px}
+  .home-card{padding:16px}
+}
