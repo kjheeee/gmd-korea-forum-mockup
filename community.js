@@ -25,19 +25,19 @@ function communityHome(){
  <div class="community-layout"><section class="staff-roster" aria-labelledby="staff-heading"><header class="staff-roster-heading"><h2 id="staff-heading">한국포럼 운영진 <span>${staff.length}명</span></h2><small>명단 예시</small></header><ul class="staff-roster-list">${staff.map(person=>staffRow(person.name,person.role)).join('')}</ul><p class="staff-note">이름과 담당 업무는 디자인 확인용 예시입니다.</p></section>
  <aside class="discord-widget-preview" aria-label="Discord 서버 위젯 예시"><header>${icon('discord')}<strong>GMD 한국포럼</strong><span>미리보기</span></header><div class="discord-widget-body"><h2>공식 Discord 서버</h2><p>공지, 이벤트와 기록 검증 문의</p><div class="discord-presence"><i aria-hidden="true"></i>온라인 6명 <small>예시</small></div><ul>${['하늘','블루문','라임','유성','큐브','새벽'].map(n=>`<li><span class="discord-user-avatar" aria-hidden="true">${n[0]}</span><span>${n}</span><i aria-hidden="true"></i></li>`).join('')}</ul><a href="https://discord.gg/nnsShzg" target="_blank" rel="noopener noreferrer">Discord 서버 들어가기 ${icon('external')}</a><small class="discord-preview-note">서버 위젯 형태의 목업 · 실시간 접속 정보가 아닙니다.</small></div></aside></div>${footer()}`;
 }
-function toggleLevelPanel(which){if(which==='advanced'){openAdvancedSearch();return}const panel=document.getElementById('quick-panel');panel.hidden=!panel.hidden;document.getElementById('quick-toggle').setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden)panel.querySelector('input').focus({preventScroll:true})}
+function toggleLevelPanel(which){if(which==='advanced'){openAdvancedSearch();return}toggleMotionPanel(document.getElementById('quick-panel'),document.getElementById('quick-toggle'))}
 
 document.addEventListener('click',e=>{
  const b=e.target.closest('button');
  if(!e.target.closest('.profile-control'))document.getElementById('profile-control')?.classList.remove('menu-open');
  if(!b)return;
  if(b.id==='header-profile'){if(toolState.demoAccount)openSelfProfile();else openDemoLogin()}
- if(b.id==='demo-sign-in'){setDemoAccount(true);document.querySelector('#modal').close();toast('예시 계정으로 로그인했습니다.')}
+ if(b.id==='demo-sign-in'){closeModal(()=>{setDemoAccount(true);toast('예시 계정으로 로그인했습니다.')})}
  if(b.id==='account-demo')setDemoAccount(true);
  if(b.hasAttribute('data-self-profile'))openSelfProfile();
  if(b.hasAttribute('data-account-settings'))openAccountSettings();
- if(b.hasAttribute('data-demo-logout')){document.querySelector('#modal').close();setDemoAccount(false);toolState.linked=false;render();toast('예시 계정에서 로그아웃했습니다.')}
- if(b.dataset.settingsPage){document.querySelector('#modal').close();changePage(b.dataset.settingsPage)}
+ if(b.hasAttribute('data-demo-logout')){closeModal(()=>{setDemoAccount(false);toolState.linked=false;render();toast('예시 계정에서 로그아웃했습니다.')})}
+ if(b.dataset.settingsPage){closeModal(()=>changePage(b.dataset.settingsPage))}
  if(b.dataset.staffName)openModal(`${modalHead(esc(b.dataset.staffName))}<p>${esc(b.dataset.staffRole)} · 운영진 예시</p><p class="tool-sample">실제 운영진 명단과 담당 업무는 연결 전입니다.</p><div class="dialog-actions"><button class="button-primary" data-close>닫기</button></div>`);
  if(b.hasAttribute('data-creators'))showCreators();
  if(b.dataset.profileRecordPage){profileRecordPage=+b.dataset.profileRecordPage;renderProfileRecords()}

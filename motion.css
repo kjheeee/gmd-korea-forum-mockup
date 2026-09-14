@@ -1,0 +1,37 @@
+/* Quiet, consistent motion. Rank rows never move or stagger. */
+:root{--motion-fast:140ms;--motion-normal:220ms;--motion-ease:cubic-bezier(.2,.7,.25,1)}
+body,.topbar,.form-panel,.guide-panel{transition:background-color 180ms,color 180ms,border-color 180ms}
+button,a,input,select,textarea{transition:background-color var(--motion-fast),border-color var(--motion-fast),color var(--motion-fast),box-shadow var(--motion-fast),opacity var(--motion-fast)}
+.button-primary,.button-secondary,.icon-btn,.video-poster,.course-card{transition:background-color var(--motion-fast),border-color var(--motion-fast),color var(--motion-fast),box-shadow var(--motion-normal),transform var(--motion-fast)}
+.button-primary:active:not(:disabled),.button-secondary:active:not(:disabled),.icon-btn:active:not(:disabled){transform:scale(.97)}
+.primary-nav button::after,.demon-tool-nav button::after,.tabs-row button::after{transition:background-color var(--motion-normal),opacity var(--motion-normal)}
+input:focus,select:focus,textarea:focus{border-color:var(--purple)}
+.level-item,.records-table tbody tr,.point-table tbody tr,.stats-table tbody tr{transition:background-color var(--motion-fast)}
+.video-poster img,.profile-best-media img{transition:transform 300ms var(--motion-ease)}
+@media(hover:hover) and (pointer:fine){
+ .button-primary:hover:not(:disabled),.button-secondary:hover:not(:disabled){transform:translateY(-1px)}
+ .video-poster:hover img{transform:scale(1.025)}
+}
+details[open]>:not(summary){animation:gmd-reveal 200ms var(--motion-ease)}
+@keyframes gmd-reveal{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+#modal.is-opening{animation:gmd-dialog-in 220ms var(--motion-ease) both}
+#modal.is-closing{animation:gmd-dialog-out 160ms ease-in both;pointer-events:none}
+#modal.is-opening::backdrop{animation:gmd-backdrop-in 220ms ease-out both}
+#modal.is-closing::backdrop{animation:gmd-backdrop-out 160ms ease-in both}
+@keyframes gmd-dialog-in{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes gmd-dialog-out{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(8px) scale(.985)}}
+@keyframes gmd-backdrop-in{from{opacity:0}to{opacity:1}}
+@keyframes gmd-backdrop-out{from{opacity:1}to{opacity:0}}
+@media(min-width:801px) and (hover:hover) and (pointer:fine){
+ .profile-control .profile-dropdown{display:block;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-5px);transition:opacity 140ms,transform 180ms var(--motion-ease),visibility 0s 180ms}
+ .profile-control:is(:hover,:focus-within,.menu-open) .profile-dropdown{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0);transition-delay:0s}
+}
+@media(max-width:800px){
+ .sidebar{transition:transform 240ms var(--motion-ease)}
+ .sidebar-shade{display:block;position:fixed;inset:0;z-index:55;background:#12122666;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 220ms,visibility 0s 220ms}
+ .sidebar-shade.visible{opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+ .button-primary:hover:not(:disabled),.button-secondary:hover:not(:disabled),.button-primary:active:not(:disabled),.button-secondary:active:not(:disabled),.icon-btn:active:not(:disabled),.video-poster:hover img{transform:none}
+}

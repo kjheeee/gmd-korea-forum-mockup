@@ -21,7 +21,7 @@ function renderRawVideoChooser(){const el=document.getElementById('request-raw-c
 function openRococpyLinkPreview(){captureRawVideoChoice();openModal(`${modalHead('Rococpy 계정 연동')}<p>연동한 계정에 업로드된 무편집 영상 목록에서 원본을 고릅니다.</p><p class="tool-sample">현재는 디자인 목업입니다. 실제 계정에 연결하지 않고 예시 영상 3개로 선택 방식을 확인합니다.</p><div class="dialog-actions"><button type="button" class="button-secondary" data-close>취소</button><button type="button" class="button-primary" data-rococpy-demo-link>예시 계정으로 연동 체험</button></div>`)}
 document.addEventListener('click',e=>{const button=e.target.closest('button');if(!button)return;
  if(button.hasAttribute('data-rococpy-connect'))openRococpyLinkPreview();
- if(button.hasAttribute('data-rococpy-demo-link')){rawVideoState.linked=true;rawVideoState.source='uploaded';document.querySelector('#modal').close();renderRawVideoChooser()}
+ if(button.hasAttribute('data-rococpy-demo-link')){rawVideoState.linked=true;rawVideoState.source='uploaded';closeModal();renderRawVideoChooser()}
  if(button.hasAttribute('data-rococpy-disconnect')){captureRawVideoChoice();rawVideoState.linked=false;rawVideoState.source='url';rawVideoState.uploadId='';renderRawVideoChooser()}
 });
 function requestFormMarkup(){
