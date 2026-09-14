@@ -1,11 +1,9 @@
 // Illustrative community and account states. No OAuth tokens or account data are stored.
-const levelFilters={min:1,max:940,creator:''};
+
 try{toolState.demoAccount=sessionStorage.getItem('gmd-demo-account')==='true'}catch{}
 function levelCreators(level){const count=level.rank===11?80:level.rank%4===0?16:1;return [level.creator,...Array.from({length:count-1},(_,i)=>'제작자 예시 '+String(i+2).padStart(2,'0'))]}
 function creatorCredit(level){const all=levelCreators(level);return `<span>제작 <strong>${esc(all[0])}</strong>${all.length>1?` <button class="creator-more" data-creators aria-label="${esc(level.name)} 제작자 ${all.length}명 전체 보기">외 ${all.length-1}명</button>`:''}</span>`}
 function showCreators(){const level=current(),all=levelCreators(level);openModal(`${modalHead(esc(level.name)+' 제작자')}<p class="creator-list-caption">총 ${all.length}명 · 목업용 제작자 목록</p><ul class="creator-list">${all.map((name,i)=>`<li><span>${i+1}</span><strong>${esc(name)}</strong></li>`).join('')}</ul><div class="dialog-actions"><button class="button-primary" data-close>닫기</button></div>`)}
-function matchesLevelFilters(level){return level.rank>=levelFilters.min&&level.rank<=levelFilters.max&&levelCreators(level).some(name=>name.toLowerCase().includes(levelFilters.creator.toLowerCase()))}
-function resetLevelFilters(){Object.assign(levelFilters,{min:1,max:940,creator:''});['filter-min','filter-max','filter-creator'].forEach(id=>document.getElementById(id).value='');document.getElementById('filter-count').textContent='';document.getElementById('filter-error').textContent=''}
 function setDemoAccount(value){toolState.demoAccount=value;if(!value&&typeof resetRococpyDemo==='function')resetRococpyDemo();try{sessionStorage.setItem('gmd-demo-account',String(value))}catch{}renderProfileControl()}
 function renderProfileControl(){
  const root=document.getElementById('profile-control');if(!root)return;
@@ -27,7 +25,8 @@ function communityHome(){
  <div class="community-layout"><section class="staff-roster" aria-labelledby="staff-heading"><header class="staff-roster-heading"><h2 id="staff-heading">한국포럼 운영진 <span>${staff.length}명</span></h2><small>명단 예시</small></header><ul class="staff-roster-list">${staff.map(person=>staffRow(person.name,person.role)).join('')}</ul><p class="staff-note">이름과 담당 업무는 디자인 확인용 예시입니다.</p></section>
  <aside class="discord-widget-preview" aria-label="Discord 서버 위젯 예시"><header>${icon('discord')}<strong>GMD 한국포럼</strong><span>미리보기</span></header><div class="discord-widget-body"><h2>공식 Discord 서버</h2><p>공지, 이벤트와 기록 검증 문의</p><div class="discord-presence"><i aria-hidden="true"></i>온라인 6명 <small>예시</small></div><ul>${['하늘','블루문','라임','유성','큐브','새벽'].map(n=>`<li><span class="discord-user-avatar" aria-hidden="true">${n[0]}</span><span>${n}</span><i aria-hidden="true"></i></li>`).join('')}</ul><a href="https://discord.gg/nnsShzg" target="_blank" rel="noopener noreferrer">Discord 서버 들어가기 ${icon('external')}</a><small class="discord-preview-note">서버 위젯 형태의 목업 · 실시간 접속 정보가 아닙니다.</small></div></aside></div>${footer()}`;
 }
-function toggleLevelPanel(which){const other=which==='advanced'?'quick':'advanced';const panel=document.getElementById(which+'-panel');panel.hidden=!panel.hidden;document.getElementById(which+'-toggle').setAttribute('aria-expanded',String(!panel.hidden));document.getElementById(other+'-panel').hidden=true;document.getElementById(other+'-toggle').setAttribute('aria-expanded','false');if(!panel.hidden)panel.querySelector('input').focus()}
+function toggleLevelPanel(which){if(which==='advanced'){openAdvancedSearch();return}const panel=document.getElementById('quick-panel');panel.hidden=!panel.hidden;document.getElementById('quick-toggle').setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden)panel.querySelector('input').focus({preventScroll:true})}
+
 document.addEventListener('click',e=>{
  const b=e.target.closest('button');
  if(!e.target.closest('.profile-control'))document.getElementById('profile-control')?.classList.remove('menu-open');
@@ -49,11 +48,6 @@ document.addEventListener('click',e=>{
  if(b.id==='filter-reset'){resetLevelFilters();renderList()}
 });
 document.addEventListener('submit',e=>{
- if(e.target.id==='advanced-panel'){
-  e.preventDefault();const min=Number(document.getElementById('filter-min').value||1),max=Number(document.getElementById('filter-max').value||940);const error=document.getElementById('filter-error');
-  if(!Number.isInteger(min)||!Number.isInteger(max)||min<1||max>940||min>max){error.textContent='1~940 사이에서 시작 순위가 마지막 순위보다 작거나 같아야 합니다.';return}
-  Object.assign(levelFilters,{min,max,creator:document.getElementById('filter-creator').value.trim()});error.textContent='';const count=Number(min!==1||max!==940)+Number(!!levelFilters.creator);document.getElementById('filter-count').textContent=count||'';renderList();
- }
  if(e.target.id==='quick-panel'){
   e.preventDefault();const level=findToolLevel(document.getElementById('quick-rank').value);if(!level){document.getElementById('quick-error').textContent='1~940위 또는 정확한 레벨 이름을 입력해 주세요.';return}
   resetLevelFilters();state.query='';document.getElementById('level-search').value='';state.level=level.rank;state.recordPage=1;state.recordQuery='';state.recordFilter='all';state.detailTab='records';renderList();changePage('demon');document.querySelector('.level-item.active')?.scrollIntoView({block:'nearest'});document.getElementById('quick-error').textContent='';

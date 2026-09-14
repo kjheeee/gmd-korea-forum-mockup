@@ -6,21 +6,22 @@
   <title>API 문서 · GMD 한국포럼</title>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-  <link rel="stylesheet" href="/gmd-korea-forum-mockup/styles.css?v=20260914-header-clean">
-  <link rel="stylesheet" href="/gmd-korea-forum-mockup/api.css?v=20260914-header-clean">
-  <link rel="stylesheet" href="/gmd-korea-forum-mockup/record.css?v=20260914-header-clean">
-  <link rel="stylesheet" href="/gmd-korea-forum-mockup/tools.css?v=20260914-header-clean">
-  <link rel="stylesheet" href="/gmd-korea-forum-mockup/gd-assets.css?v=20260914-header-clean">
-  <link rel="stylesheet" href="/gmd-korea-forum-mockup/theme-system.css?v=20260914-header-clean">
-  <link rel="stylesheet" href="/gmd-korea-forum-mockup/home.css?v=20260914-header-clean">
-  <link rel="stylesheet" href="/gmd-korea-forum-mockup/community.css?v=20260914-header-clean">
+  <link rel="stylesheet" href="/gmd-korea-forum-mockup/styles.css?v=20260914-request-filter">
+  <link rel="stylesheet" href="/gmd-korea-forum-mockup/api.css?v=20260914-request-filter">
+  <link rel="stylesheet" href="/gmd-korea-forum-mockup/record.css?v=20260914-request-filter">
+  <link rel="stylesheet" href="/gmd-korea-forum-mockup/tools.css?v=20260914-request-filter">
+  <link rel="stylesheet" href="/gmd-korea-forum-mockup/gd-assets.css?v=20260914-request-filter">
+  <link rel="stylesheet" href="/gmd-korea-forum-mockup/theme-system.css?v=20260914-request-filter">
+  <link rel="stylesheet" href="/gmd-korea-forum-mockup/home.css?v=20260914-request-filter">
+  <link rel="stylesheet" href="/gmd-korea-forum-mockup/community.css?v=20260914-request-filter">
   <script>try{var t=localStorage.getItem('gmd-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch{}</script>
-  <script src="/gmd-korea-forum-mockup/api.js?v=20260914-header-clean" defer></script>
-  <script src="/gmd-korea-forum-mockup/gd-assets.js?v=20260914-header-clean" defer></script>
-  <script src="/gmd-korea-forum-mockup/tools.js?v=20260914-header-clean" defer></script>
-  <script src="/gmd-korea-forum-mockup/community.js?v=20260914-header-clean" defer></script>
-  <script src="/gmd-korea-forum-mockup/requests.js?v=20260914-header-clean" defer></script>
-  <script src="/gmd-korea-forum-mockup/app.js?v=20260914-header-clean" defer></script>
+  <script src="/gmd-korea-forum-mockup/api.js?v=20260914-request-filter" defer></script>
+  <script src="/gmd-korea-forum-mockup/gd-assets.js?v=20260914-request-filter" defer></script>
+  <script src="/gmd-korea-forum-mockup/tools.js?v=20260914-request-filter" defer></script>
+  <script defer src="/gmd-korea-forum-mockup/filters.js?v=20260914-request-filter"></script>
+  <script src="/gmd-korea-forum-mockup/community.js?v=20260914-request-filter" defer></script>
+  <script src="/gmd-korea-forum-mockup/requests.js?v=20260914-request-filter" defer></script>
+  <script src="/gmd-korea-forum-mockup/app.js?v=20260914-request-filter" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">본문으로 이동</a>
@@ -41,8 +42,8 @@
   <div class="workspace">
     <button class="sidebar-shade" id="sidebar-shade" aria-label="레벨 목록 닫기"></button>
     <aside class="sidebar" id="sidebar" aria-label="레벨 탐색">
-      <div class="sidebar-head"><div class="sidebar-title"><span>데몬리스트</span><b>940</b><button id="close-sidebar" class="icon-btn mobile-only" aria-label="레벨 목록 닫기">×</button></div><label class="search-box"><span data-icon="search"></span><input id="level-search" placeholder="레벨 이름 또는 순위 검색" aria-label="레벨 이름 또는 순위 검색"><kbd>/</kbd></label><div class="level-search-actions"><button id="advanced-toggle" aria-expanded="false" aria-controls="advanced-panel">고급 <span id="filter-count"></span></button><button id="quick-toggle" aria-expanded="false" aria-controls="quick-panel">빠른 이동</button></div>
-<form id="advanced-panel" class="level-filter-panel" hidden><fieldset><legend>순위 범위</legend><div class="rank-range-fields"><input id="filter-min" type="number" min="1" max="940" placeholder="1" aria-label="시작 순위"><span>–</span><input id="filter-max" type="number" min="1" max="940" placeholder="940" aria-label="마지막 순위"></div></fieldset><label for="filter-creator">제작자</label><input id="filter-creator" placeholder="제작자 이름"><p id="filter-error" class="tool-error" role="status"></p><div class="filter-buttons"><button class="button-primary" type="submit">적용</button><button class="button-secondary" type="button" id="filter-reset">초기화</button></div></form>
+      <div class="sidebar-head"><div class="sidebar-title"><span>데몬리스트</span><b>940</b><button id="close-sidebar" class="icon-btn mobile-only" aria-label="레벨 목록 닫기">×</button></div><label class="search-box"><span data-icon="search"></span><input id="level-search" placeholder="레벨 이름 또는 순위 검색" aria-label="레벨 이름 또는 순위 검색"><kbd>/</kbd></label><div class="level-search-actions"><button id="advanced-toggle" aria-haspopup="dialog" aria-controls="modal">고급 <span id="filter-count"></span></button><button id="quick-toggle" aria-expanded="false" aria-controls="quick-panel">빠른 이동</button></div>
+
 <form id="quick-panel" class="level-filter-panel" hidden><label for="quick-rank">순위 또는 정확한 레벨 이름</label><input id="quick-rank" placeholder="예: 125 또는 Tidal Wave" required><p id="quick-error" class="tool-error" role="status"></p><button class="button-primary" type="submit">레벨로 이동</button></form></div>
       <div class="list-caption"><span>난이도 순위</span><span id="level-result-count">940개 · 예시</span></div>
       <div class="level-list" id="level-list"></div>
