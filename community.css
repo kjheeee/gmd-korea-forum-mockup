@@ -26,3 +26,6 @@
 .primary-nav{min-width:0;overflow-x:auto;scrollbar-width:thin;gap:clamp(14px,1.8vw,28px)}.primary-nav button{flex-shrink:0;white-space:nowrap}.header-actions{flex-shrink:0}.play-tool-nav button:last-child,.account-nav button:last-child{margin-left:0}
 @media(min-width:801px){.topbar{gap:24px}.primary-nav{flex:1}.brand{flex-shrink:0}}
 @media(max-width:800px){.primary-nav{flex:none;justify-content:flex-start;gap:22px}.primary-nav button{padding:0 2px}.primary-nav .nav-count{display:none}}
+
+/* Keep mobile search inputs at 16px so focusing them does not trigger browser zoom. */
+@media(max-width:800px),(pointer:coarse){.search-box input,.level-filter-panel input{font-size:16px}}
