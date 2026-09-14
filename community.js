@@ -11,7 +11,7 @@ function renderProfileControl(){
  const root=document.getElementById('profile-control');if(!root)return;
  root.innerHTML=`<button class="profile-trigger icon-btn" id="header-profile" aria-label="${toolState.demoAccount?'내 프로필 · 예시 계정':'Discord 로그인'}" ${toolState.demoAccount?'aria-controls="profile-dropdown" aria-expanded="false"':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 22v-3a8 8 0 0 1 16 0v3"/></svg></button>${toolState.demoAccount?'<div class="profile-dropdown" id="profile-dropdown"><small>예시 계정 · 하늘</small><button data-self-profile>프로필</button><button data-account-settings>설정</button><button data-demo-logout>로그아웃</button></div>':''}`;
 }
-function openSelfProfile(){openUserProfile('하늘');document.querySelector('#modal-content').insertAdjacentHTML('beforeend','<div class="dialog-actions"><button class="button-secondary" data-account-settings>설정</button><button class="button-secondary" data-demo-logout>로그아웃</button></div>')}
+function openSelfProfile(){openUserProfile('하늘')}
 function openDemoLogin(){openModal(`${modalHead('Discord 로그인')}<p>실제 서비스에서는 Discord 인증 화면으로 이동합니다.</p><p class="tool-sample">지금은 디자인 목업입니다. 예시 계정으로 프로필과 메뉴를 살펴볼 수 있습니다.</p><div class="dialog-actions"><button class="button-secondary" data-close>닫기</button><button class="button-primary" id="demo-sign-in">예시 계정으로 로그인</button></div>`)}
 function openAccountSettings(){openModal(`${modalHead('계정 설정')}<p>하늘 · 예시 계정</p><div class="settings-links"><button class="button-secondary" data-settings-page="account">Discord·포럼 계정 연동</button><button class="button-secondary" data-settings-page="nickname">닉네임 변경 요청</button><button class="button-secondary" id="settings-theme">화면을 ${effectiveTheme()==='dark'?'라이트':'다크'} 모드로 전환</button></div><p class="tool-sample">실제 계정에는 반영되지 않습니다.</p>`)}
 const staffGroups=[
@@ -42,6 +42,7 @@ document.addEventListener('click',e=>{
  if(b.id==='settings-theme'){document.querySelector('#theme-toggle').click();openAccountSettings()}
  if(b.dataset.staffName)openModal(`${modalHead(esc(b.dataset.staffName))}<p>${esc(b.dataset.staffRole)} · 운영진 예시</p><p class="tool-sample">실제 운영진 명단과 담당 업무는 연결 전입니다.</p><div class="dialog-actions"><button class="button-primary" data-close>닫기</button></div>`);
  if(b.hasAttribute('data-creators'))showCreators();
+ if(b.dataset.profileRecordPage){profileRecordPage=+b.dataset.profileRecordPage;renderProfileRecords()}
  if(b.id==='advanced-toggle')toggleLevelPanel('advanced');
  if(b.id==='quick-toggle')toggleLevelPanel('quick');
  if(b.id==='filter-reset'){resetLevelFilters();renderList()}
