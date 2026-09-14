@@ -43,6 +43,8 @@ document.addEventListener('click',e=>{
  if(b.dataset.staffName)openModal(`${modalHead(esc(b.dataset.staffName))}<p>${esc(b.dataset.staffRole)} · 운영진 예시</p><p class="tool-sample">실제 운영진 명단과 담당 업무는 연결 전입니다.</p><div class="dialog-actions"><button class="button-primary" data-close>닫기</button></div>`);
  if(b.hasAttribute('data-creators'))showCreators();
  if(b.dataset.profileRecordPage){profileRecordPage=+b.dataset.profileRecordPage;renderProfileRecords()}
+ if(b.dataset.profileTab)setProfileTab(b.dataset.profileTab);
+ if(b.hasAttribute('data-profile-best-video'))document.getElementById('profile-best-media').innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/9fsZ014qB3s?autoplay=1" title="Tidal Wave 레벨 참고 영상 · Zoink" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>';
  if(b.id==='advanced-toggle')toggleLevelPanel('advanced');
  if(b.id==='quick-toggle')toggleLevelPanel('quick');
  if(b.id==='filter-reset'){resetLevelFilters();renderList()}
@@ -63,3 +65,5 @@ document.addEventListener('keydown',e=>{
  if(e.key==='ArrowDown'&&toolState.demoAccount&&matchMedia('(min-width: 801px) and (hover: hover) and (pointer: fine)').matches){e.preventDefault();control.classList.add('menu-open');document.getElementById('header-profile').setAttribute('aria-expanded','true');control.querySelector('.profile-dropdown button')?.focus()}
  if(e.key==='Escape'){control.classList.remove('menu-open');document.getElementById('header-profile').setAttribute('aria-expanded','false');e.target.blur()}
 });
+
+document.addEventListener('keydown',e=>{const tab=e.target.closest('[data-profile-tab]');if(!tab||!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const all=[...document.querySelectorAll('[data-profile-tab]')],index=all.indexOf(tab);const next=e.key==='Home'?0:e.key==='End'?all.length-1:(index+(e.key==='ArrowRight'?1:-1)+all.length)%all.length;setProfileTab(all[next].dataset.profileTab);all[next].focus()});
