@@ -13,7 +13,7 @@ function renderProfileControl(){
 }
 function openSelfProfile(){openUserProfile('하늘')}
 function openDemoLogin(){openModal(`${modalHead('Discord 로그인')}<p>실제 서비스에서는 Discord 인증 화면으로 이동합니다.</p><p class="tool-sample">지금은 디자인 목업입니다. 예시 계정으로 프로필과 메뉴를 살펴볼 수 있습니다.</p><div class="dialog-actions"><button class="button-secondary" data-close>닫기</button><button class="button-primary" id="demo-sign-in">예시 계정으로 로그인</button></div>`)}
-function openAccountSettings(){openModal(`${modalHead('계정 설정')}<p>하늘 · 예시 계정</p><div class="settings-links"><button class="button-secondary" data-settings-page="account">Discord·포럼 계정 연동</button><button class="button-secondary" data-settings-page="nickname">닉네임 변경 요청</button><button class="button-secondary" id="settings-theme">화면을 ${effectiveTheme()==='dark'?'라이트':'다크'} 모드로 전환</button></div><p class="tool-sample">실제 계정에는 반영되지 않습니다.</p>`)}
+function openAccountSettings(){openModal(`${modalHead('계정 설정')}<p>하늘 · 예시 계정</p><div class="settings-links"><button class="button-secondary" data-settings-page="account">Discord·포럼 계정 연동</button><button class="button-secondary" data-settings-page="nickname">닉네임 변경 요청</button></div><p class="tool-sample">실제 계정에는 반영되지 않습니다.</p>`)}
 const staffGroups=[
  {title:'운영 총괄',role:'사이트 운영',members:['하늘','블루문','네온']},
  {title:'데몬리스트',role:'기록 검증',members:['라임','유성','한별','큐브','새벽','은하','민트','온유','파도','루나','여름','누리','별빛','단풍','호수']},
@@ -39,7 +39,6 @@ document.addEventListener('click',e=>{
  if(b.hasAttribute('data-account-settings'))openAccountSettings();
  if(b.hasAttribute('data-demo-logout')){document.querySelector('#modal').close();setDemoAccount(false);toolState.linked=false;render();toast('예시 계정에서 로그아웃했습니다.')}
  if(b.dataset.settingsPage){document.querySelector('#modal').close();changePage(b.dataset.settingsPage)}
- if(b.id==='settings-theme'){document.querySelector('#theme-toggle').click();openAccountSettings()}
  if(b.dataset.staffName)openModal(`${modalHead(esc(b.dataset.staffName))}<p>${esc(b.dataset.staffRole)} · 운영진 예시</p><p class="tool-sample">실제 운영진 명단과 담당 업무는 연결 전입니다.</p><div class="dialog-actions"><button class="button-primary" data-close>닫기</button></div>`);
  if(b.hasAttribute('data-creators'))showCreators();
  if(b.dataset.profileRecordPage){profileRecordPage=+b.dataset.profileRecordPage;renderProfileRecords()}
