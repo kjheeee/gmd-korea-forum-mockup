@@ -1,0 +1,63 @@
+// Illustrative community and account states. No OAuth tokens or account data are stored.
+const levelFilters={min:1,max:940,creator:''};
+try{toolState.demoAccount=sessionStorage.getItem('gmd-demo-account')==='true'}catch{}
+function levelCreators(level){const count=level.rank===11?80:level.rank%4===0?16:1;return [level.creator,...Array.from({length:count-1},(_,i)=>'제작자 예시 '+String(i+2).padStart(2,'0'))]}
+function creatorCredit(level){const all=levelCreators(level);return `<span>제작 <strong>${esc(all[0])}</strong>${all.length>1?` <button class="creator-more" data-creators aria-label="${esc(level.name)} 제작자 ${all.length}명 전체 보기">외 ${all.length-1}명</button>`:''}</span>`}
+function showCreators(){const level=current(),all=levelCreators(level);openModal(`${modalHead(esc(level.name)+' 제작자')}<p class="creator-list-caption">총 ${all.length}명 · 목업용 제작자 목록</p><ul class="creator-list">${all.map((name,i)=>`<li><span>${i+1}</span><strong>${esc(name)}</strong></li>`).join('')}</ul><div class="dialog-actions"><button class="button-primary" data-close>닫기</button></div>`)}
+function matchesLevelFilters(level){return level.rank>=levelFilters.min&&level.rank<=levelFilters.max&&levelCreators(level).some(name=>name.toLowerCase().includes(levelFilters.creator.toLowerCase()))}
+function resetLevelFilters(){Object.assign(levelFilters,{min:1,max:940,creator:''});['filter-min','filter-max','filter-creator'].forEach(id=>document.getElementById(id).value='');document.getElementById('filter-count').textContent='';document.getElementById('filter-error').textContent=''}
+function setDemoAccount(value){toolState.demoAccount=value;try{sessionStorage.setItem('gmd-demo-account',String(value))}catch{}renderProfileControl()}
+function renderProfileControl(){
+ const root=document.getElementById('profile-control');if(!root)return;
+ root.innerHTML=`<button class="profile-trigger icon-btn" id="header-profile" aria-label="${toolState.demoAccount?'내 프로필 · 예시 계정':'Discord 로그인'}" ${toolState.demoAccount?'aria-controls="profile-dropdown" aria-expanded="false"':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 22v-3a8 8 0 0 1 16 0v3"/></svg></button>${toolState.demoAccount?'<div class="profile-dropdown" id="profile-dropdown"><small>예시 계정 · 하늘</small><button data-self-profile>프로필</button><button data-account-settings>설정</button><button data-demo-logout>로그아웃</button></div>':''}`;
+}
+function openSelfProfile(){openUserProfile('하늘');document.querySelector('#modal-content').insertAdjacentHTML('beforeend','<div class="dialog-actions"><button class="button-secondary" data-account-settings>설정</button><button class="button-secondary" data-demo-logout>로그아웃</button></div>')}
+function openDemoLogin(){openModal(`${modalHead('Discord 로그인')}<p>실제 서비스에서는 Discord 인증 화면으로 이동합니다.</p><p class="tool-sample">지금은 디자인 목업입니다. 예시 계정으로 프로필과 메뉴를 살펴볼 수 있습니다.</p><div class="dialog-actions"><button class="button-secondary" data-close>닫기</button><button class="button-primary" id="demo-sign-in">예시 계정으로 로그인</button></div>`)}
+function openAccountSettings(){openModal(`${modalHead('계정 설정')}<p>하늘 · 예시 계정</p><div class="settings-links"><button class="button-secondary" data-settings-page="account">Discord·포럼 계정 연동</button><button class="button-secondary" data-settings-page="nickname">닉네임 변경 요청</button><button class="button-secondary" id="settings-theme">화면을 ${effectiveTheme()==='dark'?'라이트':'다크'} 모드로 전환</button></div><p class="tool-sample">실제 계정에는 반영되지 않습니다.</p>`)}
+const staffGroups=[
+ {title:'운영 총괄',role:'사이트 운영',members:['하늘','블루문','네온']},
+ {title:'데몬리스트',role:'기록 검증',members:['라임','유성','한별','큐브','새벽','은하','민트','온유','파도','루나','여름','누리','별빛','단풍','호수']},
+ {title:'스탯랭킹',role:'스탯 검증',members:['도토리','바다','달빛','이슬','초록','구름','나무','노을']},
+ {title:'GDDP',role:'코스 관리',members:['소라','나래','보라','여울','산들','모래','해솔']}
+];
+function staffRow(name,role){return `<li><button class="staff-person" data-staff-name="${name}" data-staff-role="${role}"><span class="staff-avatar" aria-hidden="true">${name[0]}</span><span><strong>${name}</strong><small>${role}</small></span>${gdImage('medal/admin.png','운영진','staff-medal')}</button></li>`}
+function communityHome(){
+ main.innerHTML=`<header class="community-heading"><div><h1>한국포럼 운영진</h1><p>데몬리스트·스탯랭킹·GDDP를 함께 관리합니다.</p></div><span class="staff-total">33명 <small>명단 예시</small></span></header>
+ <div class="community-layout"><section class="staff-directory" aria-label="운영진 명단">${staffGroups.map(g=>`<section class="staff-group"><header><h2>${g.title}</h2><span>${g.members.length}명</span></header><ul>${g.members.slice(0,3).map(n=>staffRow(n,g.role)).join('')}</ul>${g.members.length>3?`<details class="staff-more"><summary>나머지 ${g.members.length-3}명 보기</summary><ul>${g.members.slice(3).map(n=>staffRow(n,g.role)).join('')}</ul></details>`:''}</section>`).join('')}<p class="staff-note">이름과 담당 업무는 디자인 확인용 예시입니다.</p></section>
+ <aside class="discord-widget-preview" aria-label="Discord 서버 위젯 예시"><header>${icon('discord')}<strong>GMD 한국포럼</strong><span>미리보기</span></header><div class="discord-widget-body"><h2>공식 Discord 서버</h2><p>공지, 이벤트와 기록 검증 문의</p><div class="discord-presence"><i aria-hidden="true"></i>온라인 6명 <small>예시</small></div><ul>${['하늘','블루문','라임','유성','큐브','새벽'].map(n=>`<li><span class="discord-user-avatar" aria-hidden="true">${n[0]}</span><span>${n}</span><i aria-hidden="true"></i></li>`).join('')}</ul><a href="https://discord.gg/nnsShzg" target="_blank" rel="noopener noreferrer">Discord 서버 들어가기 ${icon('external')}</a><small class="discord-preview-note">서버 위젯 형태의 목업 · 실시간 접속 정보가 아닙니다.</small></div></aside></div>${footer()}`;
+}
+function toggleLevelPanel(which){const other=which==='advanced'?'quick':'advanced';const panel=document.getElementById(which+'-panel');panel.hidden=!panel.hidden;document.getElementById(which+'-toggle').setAttribute('aria-expanded',String(!panel.hidden));document.getElementById(other+'-panel').hidden=true;document.getElementById(other+'-toggle').setAttribute('aria-expanded','false');if(!panel.hidden)panel.querySelector('input').focus()}
+document.addEventListener('click',e=>{
+ const b=e.target.closest('button');
+ if(!e.target.closest('.profile-control'))document.getElementById('profile-control')?.classList.remove('menu-open');
+ if(!b)return;
+ if(b.id==='header-profile'){if(toolState.demoAccount)openSelfProfile();else openDemoLogin()}
+ if(b.id==='demo-sign-in'){setDemoAccount(true);document.querySelector('#modal').close();toast('예시 계정으로 로그인했습니다.')}
+ if(b.id==='account-demo')setDemoAccount(true);
+ if(b.hasAttribute('data-self-profile'))openSelfProfile();
+ if(b.hasAttribute('data-account-settings'))openAccountSettings();
+ if(b.hasAttribute('data-demo-logout')){document.querySelector('#modal').close();setDemoAccount(false);toolState.linked=false;render();toast('예시 계정에서 로그아웃했습니다.')}
+ if(b.dataset.settingsPage){document.querySelector('#modal').close();changePage(b.dataset.settingsPage)}
+ if(b.id==='settings-theme'){document.querySelector('#theme-toggle').click();openAccountSettings()}
+ if(b.dataset.staffName)openModal(`${modalHead(esc(b.dataset.staffName))}<p>${esc(b.dataset.staffRole)} · 운영진 예시</p><p class="tool-sample">실제 운영진 명단과 담당 업무는 연결 전입니다.</p><div class="dialog-actions"><button class="button-primary" data-close>닫기</button></div>`);
+ if(b.hasAttribute('data-creators'))showCreators();
+ if(b.id==='advanced-toggle')toggleLevelPanel('advanced');
+ if(b.id==='quick-toggle')toggleLevelPanel('quick');
+ if(b.id==='filter-reset'){resetLevelFilters();renderList()}
+});
+document.addEventListener('submit',e=>{
+ if(e.target.id==='advanced-panel'){
+  e.preventDefault();const min=Number(document.getElementById('filter-min').value||1),max=Number(document.getElementById('filter-max').value||940);const error=document.getElementById('filter-error');
+  if(!Number.isInteger(min)||!Number.isInteger(max)||min<1||max>940||min>max){error.textContent='1~940 사이에서 시작 순위가 마지막 순위보다 작거나 같아야 합니다.';return}
+  Object.assign(levelFilters,{min,max,creator:document.getElementById('filter-creator').value.trim()});error.textContent='';const count=Number(min!==1||max!==940)+Number(!!levelFilters.creator);document.getElementById('filter-count').textContent=count||'';renderList();
+ }
+ if(e.target.id==='quick-panel'){
+  e.preventDefault();const level=findToolLevel(document.getElementById('quick-rank').value);if(!level){document.getElementById('quick-error').textContent='1~940위 또는 정확한 레벨 이름을 입력해 주세요.';return}
+  resetLevelFilters();state.query='';document.getElementById('level-search').value='';state.level=level.rank;state.recordPage=1;state.recordQuery='';state.recordFilter='all';state.detailTab='records';renderList();changePage('demon');document.querySelector('.level-item.active')?.scrollIntoView({block:'nearest'});document.getElementById('quick-error').textContent='';
+ }
+});
+document.addEventListener('keydown',e=>{
+ const control=e.target.closest('.profile-control');if(!control)return;
+ if(e.key==='ArrowDown'&&toolState.demoAccount){e.preventDefault();control.classList.add('menu-open');document.getElementById('header-profile').setAttribute('aria-expanded','true');control.querySelector('.profile-dropdown button')?.focus()}
+ if(e.key==='Escape'){control.classList.remove('menu-open');document.getElementById('header-profile').setAttribute('aria-expanded','false');e.target.blur()}
+});
