@@ -29,3 +29,13 @@
 
 /* Keep mobile search inputs at 16px so focusing them does not trigger browser zoom. */
 @media(max-width:800px),(pointer:coarse){.search-box input,.level-filter-panel input{font-size:16px}}
+
+/* Retain the original GD welcome artwork above a single staff roster. */
+.forum-welcome{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;min-height:240px;padding:36px 28px;margin-bottom:32px;border:1px solid #1c4888;border-radius:4px;background:#225cb4;color:#fff;box-shadow:0 3px 0 #153b70;text-align:center}
+.forum-welcome:before{content:"";position:absolute;inset:0;z-index:-1;background:url('./img/forum-bg.jpg') center/cover;opacity:.65;pointer-events:none}
+.forum-welcome h1{width:min(100%,760px);margin:0;line-height:1}.forum-welcome img{display:block;width:100%;height:auto;filter:drop-shadow(0 2px 0 #173763)}.forum-welcome p{margin:0;font-size:16px;line-height:1.65;word-break:keep-all;text-shadow:0 1px 2px #153b70}
+.staff-roster{min-width:0}.staff-roster-heading{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding-bottom:14px;border-bottom:2px solid var(--line)}.staff-roster-heading h2{font-size:20px}.staff-roster-heading h2 span{font-size:13px;font-weight:500;color:var(--sub);margin-left:8px}.staff-roster-heading>small{font-size:12px;color:var(--sub)}
+.staff-roster-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px;list-style:none;margin:0;padding:0}.staff-roster-list li{min-width:0}.staff-roster-list .staff-person{padding:13px 0;gap:10px;min-height:62px}.staff-roster-list .staff-avatar{width:30px;height:30px;font-size:13px}.staff-roster-list .staff-medal{display:none}.staff-roster .staff-note{margin-top:16px;line-height:1.7}
+@media(max-width:950px){.staff-roster-list{grid-template-columns:1fr}.community-layout{gap:28px}}
+@media(max-width:620px){.forum-welcome{min-height:156px;padding:28px 14px;gap:18px;margin-bottom:28px}.forum-welcome p{font-size:14px}.staff-roster-heading h2{font-size:18px}.staff-roster-list{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:18px}.staff-roster-list .staff-person{gap:8px}.staff-roster-list .staff-person strong{font-size:14px}.staff-roster-list .staff-person small{font-size:12px}.community-layout{gap:32px}}
+@media(max-width:359px){.staff-roster-list{column-gap:12px}.staff-roster-list .staff-avatar{display:none}}
