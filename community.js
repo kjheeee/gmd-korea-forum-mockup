@@ -60,6 +60,6 @@ document.addEventListener('submit',e=>{
 });
 document.addEventListener('keydown',e=>{
  const control=e.target.closest('.profile-control');if(!control)return;
- if(e.key==='ArrowDown'&&toolState.demoAccount){e.preventDefault();control.classList.add('menu-open');document.getElementById('header-profile').setAttribute('aria-expanded','true');control.querySelector('.profile-dropdown button')?.focus()}
+ if(e.key==='ArrowDown'&&toolState.demoAccount&&matchMedia('(min-width: 801px) and (hover: hover) and (pointer: fine)').matches){e.preventDefault();control.classList.add('menu-open');document.getElementById('header-profile').setAttribute('aria-expanded','true');control.querySelector('.profile-dropdown button')?.focus()}
  if(e.key==='Escape'){control.classList.remove('menu-open');document.getElementById('header-profile').setAttribute('aria-expanded','false');e.target.blur()}
 });

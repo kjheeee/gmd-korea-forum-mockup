@@ -1,6 +1,6 @@
 .profile-control{position:relative}.profile-trigger{width:36px;height:36px;border:1px solid var(--line);border-radius:50%;background:var(--surface)}
 .profile-dropdown{position:absolute;right:0;top:100%;padding:8px;width:175px;z-index:50;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:4px;display:none}
-.profile-control:hover .profile-dropdown,.profile-control:focus-within .profile-dropdown,.profile-control.menu-open .profile-dropdown{display:block}
+@media(min-width:801px) and (hover:hover) and (pointer:fine){.profile-control:hover .profile-dropdown,.profile-control:focus-within .profile-dropdown,.profile-control.menu-open .profile-dropdown{display:block}}
 .profile-dropdown small{display:block;padding:8px;color:var(--sub);font-size:12px}.profile-dropdown button{display:flex;justify-content:flex-start;width:100%;padding:10px;font-size:14px}.profile-dropdown button:hover{background:var(--soft)}
 .settings-links{display:flex;flex-direction:column;gap:12px;margin:24px 0}
 .level-search-actions{display:flex;gap:8px;margin-top:12px}.level-search-actions button{flex:1;border:1px solid var(--line);background:var(--surface);border-radius:3px;min-height:36px;font-size:13px}.level-search-actions button[aria-expanded=true]{background:var(--tint);color:var(--purple);border-color:var(--purple)}
